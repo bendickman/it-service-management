@@ -20,14 +20,6 @@ public class ListTicketsEndpoint : EndpointBaseAsync.WithRequest<ListTicketsRequ
         [FromQuery] ListTicketsRequest request,
         CancellationToken cancellationToken = default)
     {
-        var ticket = new Data.Models.Ticket
-        {
-            Title = "Test Ticket",
-            CreatedDate = DateTime.UtcNow,
-            Description = "Some nice description",
-        };
-
-        _ticketService.AddTicket(ticket);
         var tickets = _ticketService.GetAllTickets();
 
         return Ok(tickets);
