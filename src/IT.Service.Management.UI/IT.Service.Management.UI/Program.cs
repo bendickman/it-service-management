@@ -2,8 +2,11 @@ using IT.Service.Management.Data.Context;
 using IT.Service.Management.Data.Interfaces;
 using IT.Service.Management.Data.Services;
 using IT.Service.Management.Data.Settings;
+using IT.Service.Management.UI.Client.Services;
 using IT.Service.Management.UI.Components;
+using IT.Service.Management.UI.Shared.Clients;
 using Microsoft.EntityFrameworkCore;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseMongoDB(mongoDBSettings.AtlasUri ?? "", mongoDBSettings.DatabaseName ?? ""));
 
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IClientTicketService, ClientTicketService>();
+
+builder.Services
+    .AddRefitClient<ITicketClient>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7243/"));
 
 var app = builder.Build();
 

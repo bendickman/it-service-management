@@ -1,9 +1,39 @@
 ﻿@using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
-@inject ITicketService _ticketService;
+@inject IClientTicketService _ticketService;
 @implements IDisposable;
 
-<h3>TicketList</h3>
+<h3>Tickets</h3>
+
+<div class="mt-3 mb-2">
+    <a class="btn btn-md btn-success">Create Ticket</a>
+</div>
+
+@if (_tickets?.Any() ?? false)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in _tickets)
+            {
+                <tr>
+                    <th scope="row">@ticket.title</th>
+                    <td>@ticket.createdDate.ToString("dd MMM yyyy")</td>
+                    <td>
+                        <a class="btn btn-sm btn-info">Edit</a>
+                        <a class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
     private IEnumerable<Ticket> _tickets = Enumerable.Empty<Ticket>();
@@ -22,7 +52,6 @@
             .Subscribe((tickets) =>
             {
                 _tickets = tickets;
-                StateHasChanged();
             });
     }
 }

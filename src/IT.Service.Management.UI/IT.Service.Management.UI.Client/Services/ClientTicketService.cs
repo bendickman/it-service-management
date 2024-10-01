@@ -5,14 +5,14 @@ using System.Reactive.Subjects;
 
 namespace IT.Service.Management.UI.Client.Services;
 
-public class TicketService : ITicketService
+public class ClientTicketService : IClientTicketService
 {
     private readonly BehaviorSubject<IEnumerable<Ticket>> _ticketsSubject = new BehaviorSubject<IEnumerable<Ticket>>(Enumerable.Empty<Ticket>());
     private readonly ITicketClient _ticketClient;
 
     public IObservable<IEnumerable<Ticket>> Tickets => _ticketsSubject.AsObservable();
 
-    public TicketService(
+    public ClientTicketService(
         ITicketClient ticketClient)
     {
         _ticketClient = ticketClient;

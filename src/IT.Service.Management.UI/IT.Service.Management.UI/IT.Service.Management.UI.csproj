@@ -12,6 +12,8 @@
     <ProjectReference Include="..\IT.Service.Management.UI.Client\IT.Service.Management.UI.Client.csproj" />
     <PackageReference Include="Ardalis.ApiEndpoints" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
+    <PackageReference Include="Refit" Version="7.2.1" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="7.2.1" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using Refit;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IClientTicketService, ClientTicketService>();
 
 builder.Services
     .AddRefitClient<ITicketClient>()
