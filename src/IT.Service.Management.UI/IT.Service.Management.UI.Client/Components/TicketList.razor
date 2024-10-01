@@ -1,0 +1,28 @@
+﻿@using IT.Service.Management.UI.Client.Services;
+@using IT.Service.Management.UI.Shared.Models;
+@inject ITicketService _ticketService;
+@implements IDisposable;
+
+<h3>TicketList</h3>
+
+@code {
+    private IEnumerable<Ticket> _tickets = Enumerable.Empty<Ticket>();
+
+    private IDisposable? _subscription;
+
+    public void Dispose()
+    {
+        _subscription.Dispose();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _subscription = _ticketService
+            .Tickets
+            .Subscribe((tickets) =>
+            {
+                _tickets = tickets;
+                StateHasChanged();
+            });
+    }
+}

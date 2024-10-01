@@ -1,0 +1,42 @@
+﻿using IT.Service.Management.Data.Context;
+using IT.Service.Management.Data.Interfaces;
+using IT.Service.Management.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+
+namespace IT.Service.Management.Data.Services;
+
+public class TicketService : ITicketService
+{
+    private readonly ApplicationDbContext _dbContext;
+
+    public TicketService(
+        ApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public void AddTicket(Ticket ticket)
+    {
+        _dbContext.Tickets.Add(ticket);
+        _dbContext.ChangeTracker.DetectChanges();
+
+        _dbContext.SaveChanges();
+    }
+
+    public IEnumerable<Ticket> GetAllTickets()
+    {
+        return _dbContext
+            .Tickets
+            .OrderBy(t => t.Id)
+            .AsNoTracking()
+            .AsEnumerable<Ticket>();
+    }
+
+    public Ticket? GetTicket(ObjectId id)
+    {
+        return _dbContext
+            .Tickets
+            .FirstOrDefault(t => t.Id == id);
+    }
+}

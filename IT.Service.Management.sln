@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT.Service.Management.UI", "src\IT.Service.Management.UI\IT.Service.Management.UI\IT.Service.Management.UI.csproj", "{335DA6EA-E063-4F7F-A3D7-B6DC3D27D2CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IT.Service.Management.UI", "src\IT.Service.Management.UI\IT.Service.Management.UI\IT.Service.Management.UI.csproj", "{335DA6EA-E063-4F7F-A3D7-B6DC3D27D2CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT.Service.Management.UI.Client", "src\IT.Service.Management.UI\IT.Service.Management.UI.Client\IT.Service.Management.UI.Client.csproj", "{6FEAAA9A-979B-4C9B-82D4-A1D9FDC51C23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IT.Service.Management.UI.Client", "src\IT.Service.Management.UI\IT.Service.Management.UI.Client\IT.Service.Management.UI.Client.csproj", "{6FEAAA9A-979B-4C9B-82D4-A1D9FDC51C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT.Service.Management.UI.Shared", "src\IT.Service.Management.UI\IT.Service.Management.UI.Shared\IT.Service.Management.UI.Shared.csproj", "{871E2B4E-F985-46D2-AFA6-36AB8089D374}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IT.Service.Management.UI.Shared", "src\IT.Service.Management.UI\IT.Service.Management.UI.Shared\IT.Service.Management.UI.Shared.csproj", "{871E2B4E-F985-46D2-AFA6-36AB8089D374}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT.Service.Management.Data", "src\IT.Service.Management.Data\IT.Service.Management.Data.csproj", "{BA57BCBD-6F61-4507-B194-20536F9368DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IT.Service.Management.Data", "src\IT.Service.Management.Data\IT.Service.Management.Data.csproj", "{BA57BCBD-6F61-4507-B194-20536F9368DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EDD4F8AB-C088-482F-9F8B-9D7A763D3E5F}"
 EndProject

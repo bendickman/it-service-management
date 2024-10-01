@@ -4,10 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>57730580-47eb-445d-a5c5-03730760c77d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\IT.Service.Management.Data\IT.Service.Management.Data.csproj" />
     <ProjectReference Include="..\IT.Service.Management.UI.Client\IT.Service.Management.UI.Client.csproj" />
+    <PackageReference Include="Ardalis.ApiEndpoints" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
   </ItemGroup>
 
