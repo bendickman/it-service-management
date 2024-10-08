@@ -2,7 +2,6 @@
 using IT.Service.Management.Data.Interfaces;
 using IT.Service.Management.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
 
 namespace IT.Service.Management.Data.Services;
 
@@ -33,7 +32,7 @@ public class TicketService : ITicketService
             .AsEnumerable<Ticket>();
     }
 
-    public Ticket? GetTicket(ObjectId id)
+    public Ticket? GetTicket(Guid id)
     {
         return _dbContext
             .Tickets

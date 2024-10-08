@@ -1,14 +1,13 @@
-﻿using MongoDB.Bson;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IT.Service.Management.Data.Models;
 
 public class Comment
 {
-    public ObjectId Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required(ErrorMessage = "Ticket Id is required")]
-    public ObjectId TicketId { get; set; }
+    public Guid TicketId { get; set; }
 
     [Required(ErrorMessage = "The Description is required")]
     public string Description { get; set; } = string.Empty;

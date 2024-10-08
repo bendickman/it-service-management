@@ -1,0 +1,11 @@
+﻿@page "/tickets/{id:guid}"
+
+<h3>TicketDetails</h3>
+
+<p>@Id</p>
+
+@code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+}

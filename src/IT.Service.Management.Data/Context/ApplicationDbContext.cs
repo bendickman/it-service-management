@@ -1,25 +1,25 @@
 ﻿using IT.Service.Management.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace IT.Service.Management.Data.Context;
 
 public class ApplicationDbContext : DbContext
 {
+    private readonly IConfiguration _configuration;
+
     public DbSet<Ticket> Tickets { get; init; }
 
     public DbSet<Comment> Comments { get; init; }
 
     public ApplicationDbContext(
-        DbContextOptions options)
-        : base(options)
+        IConfiguration configuration)
     {
+        _configuration = configuration;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Ticket>();
-        modelBuilder.Entity<Comment>();
+        optionsBuilder.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
     }
 }

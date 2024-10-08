@@ -1,13 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IT.Service.Management.Data.Models;
 
-[Collection("Tickets")]
 public class Ticket
 {
-    public ObjectId Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required(ErrorMessage = "The Title is required")]
     public string Title { get; set; } = string.Empty;
@@ -21,5 +18,4 @@ public class Ticket
     public DateTime? UpdatedDate { get; set; }
 
     public DateTime? DeletedDate { get; set; }
-
 }
