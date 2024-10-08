@@ -4,5 +4,5 @@ namespace IT.Service.Management.UI.Client.Services;
 
 public interface IClientTicketService
 {
-    IObservable<IEnumerable<Ticket>> Tickets { get; }
+    Task<IEnumerable<Ticket>> ListTicketsAsync(CancellationToken cancellationToken = default);
 }

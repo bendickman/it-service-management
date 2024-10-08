@@ -1,7 +1,6 @@
 ﻿@using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
 @inject IClientTicketService _ticketService;
-@implements IDisposable;
 
 <h3>Tickets</h3>
 
@@ -20,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var ticket in _tickets)
+            @foreach (var ticket in _tickets.OrderBy(t => t.createdDate))
             {
                 <tr>
                     <th scope="row">@ticket.title</th>
@@ -38,20 +37,8 @@
 @code {
     private IEnumerable<Ticket> _tickets = Enumerable.Empty<Ticket>();
 
-    private IDisposable? _subscription;
-
-    public void Dispose()
-    {
-        _subscription.Dispose();
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        _subscription = _ticketService
-            .Tickets
-            .Subscribe((tickets) =>
-            {
-                _tickets = tickets;
-            });
+        _tickets = await _ticketService.ListTicketsAsync();
     }
 }
