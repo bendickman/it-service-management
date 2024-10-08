@@ -15,7 +15,8 @@ public class TicketService : ITicketService
         _dbContext = dbContext;
     }
 
-    public void AddTicket(Ticket ticket)
+    public void AddTicket(
+        Ticket ticket)
     {
         _dbContext.Tickets.Add(ticket);
         _dbContext.ChangeTracker.DetectChanges();
@@ -32,10 +33,11 @@ public class TicketService : ITicketService
             .AsEnumerable<Ticket>();
     }
 
-    public Ticket? GetTicket(Guid id)
+    public Task<Ticket?> GetTicketAsync(
+        Guid id)
     {
         return _dbContext
             .Tickets
-            .FirstOrDefault(t => t.Id == id);
+            .FirstOrDefaultAsync(t => t.Id == id);
     }
 }

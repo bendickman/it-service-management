@@ -15,6 +15,13 @@ public class ClientTicketService : IClientTicketService
         _ticketClient = ticketClient;
     }
 
+    public async Task<Ticket> GetTicketAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        return await _ticketClient.GetTicketAsync(id, cancellationToken);
+    }
+
     public async Task<IEnumerable<Ticket>> ListTicketsAsync(
         CancellationToken cancellationToken = default)
     {

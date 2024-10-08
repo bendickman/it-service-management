@@ -1,11 +1,39 @@
-﻿@page "/tickets/{id:guid}"
+﻿@page "/ticket/{id:guid}"
+@using IT.Service.Management.UI.Client.Services;
+@using IT.Service.Management.UI.Shared.Models;
+@inject IClientTicketService _ticketService;
 
-<h3>TicketDetails</h3>
+@if (ticket is not null)
+{
+    <PageTitle>Ticket Details - @ticket.title</PageTitle>
 
-<p>@Id</p>
+    <div class="card">
+        <div class="card-header alert alert-success">
+            Ticket Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@ticket.title</h5>
+            <p class="card-text">@ticket.createdDate.ToString("dd MMM yyyy")</p>
+            <p class="card-text">@ticket.description</p>
+        </div>
+    </div>
+}
+else
+{
+    <PageTitle>Ticket Details</PageTitle>
+
+    <h1>Loading ticket...</h1>
+}
 
 @code {
 
     [Parameter]
     public Guid Id { get; set; }
+
+    private Ticket ticket { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ticket = await _ticketService.GetTicketAsync(Id, CancellationToken.None);
+    }
 }

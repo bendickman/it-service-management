@@ -6,7 +6,7 @@ public interface ITicketService
 {
     IEnumerable<Ticket> GetAllTickets();
 
-    Ticket? GetTicket(Guid id);
+    Task<Ticket?> GetTicketAsync(Guid id);
 
     void AddTicket(Ticket ticket);
 }
