@@ -1,10 +1,12 @@
 ﻿@page "/ticket/{id:guid}"
+@using IT.Service.Management.UI.Client.Components
 @using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
 @inject IClientTicketService _ticketService;
 
 @if (ticket is not null)
 {
+    <Breadcrumb Ticket="ticket" />
     <PageTitle>Ticket Details - @ticket.title</PageTitle>
 
     <div class="card">

@@ -1,0 +1,13 @@
+﻿@using IT.Service.Management.UI.Shared.Models
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Ticket.title</li>
+    </ol>
+</nav>
+
+@code {
+
+    [Parameter]
+    public Ticket Ticket { get; set; }
+}
