@@ -1,4 +1,5 @@
-﻿using IT.Service.Management.UI.Shared.Clients;
+﻿using IT.Service.Management.UI.Endpoints.Ticket.Add;
+using IT.Service.Management.UI.Shared.Clients;
 using IT.Service.Management.UI.Shared.Models;
 
 namespace IT.Service.Management.UI.Client.Services;
@@ -7,12 +8,17 @@ public class ClientTicketService : IClientTicketService
 {
     private readonly ITicketClient _ticketClient;
 
-
-
     public ClientTicketService(
         ITicketClient ticketClient)
     {
         _ticketClient = ticketClient;
+    }
+
+    public async Task AddTicket(
+        CreateTicketRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        await _ticketClient.AddTicket(request, cancellationToken);
     }
 
     public async Task<Ticket> GetTicketAsync(

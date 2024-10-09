@@ -8,5 +8,7 @@ public interface ITicketService
 
     Task<Ticket?> GetTicketAsync(Guid id);
 
-    void AddTicket(Ticket ticket);
+    Task AddTicketAsync(
+        Ticket ticket,
+        CancellationToken cancellationToken);
 }

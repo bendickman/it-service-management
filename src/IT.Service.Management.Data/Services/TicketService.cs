@@ -15,13 +15,16 @@ public class TicketService : ITicketService
         _dbContext = dbContext;
     }
 
-    public void AddTicket(
-        Ticket ticket)
+    public async Task AddTicketAsync(
+        Ticket ticket,
+        CancellationToken cancellationToken)
     {
-        _dbContext.Tickets.Add(ticket);
+        ticket.CreatedDate = DateTime.UtcNow;
+
+        await _dbContext.Tickets.AddAsync(ticket, cancellationToken);
         _dbContext.ChangeTracker.DetectChanges();
 
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public IEnumerable<Ticket> GetAllTickets()
