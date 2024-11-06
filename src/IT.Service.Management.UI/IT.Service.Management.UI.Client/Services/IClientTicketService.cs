@@ -10,4 +10,6 @@ public interface IClientTicketService
     Task<Ticket> GetTicketAsync(Guid id, CancellationToken cancellationToken = default);
 
     Task AddTicket(CreateTicketRequest request, CancellationToken cancellationToken = default);
+
+    Task DeleteTicketAsync(Guid id, CancellationToken cancellationToken = default);
 }

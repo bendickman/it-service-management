@@ -14,4 +14,7 @@ public interface ITicketClient
 
     [Post("/v1/ticket")]
     Task AddTicket(CreateTicketRequest request, CancellationToken cancellationToken);
+
+    [Delete("/v1/ticket/{id}")]
+    Task<Ticket> DeleteTicketAsync(Guid id, CancellationToken cancellationToken);
 }

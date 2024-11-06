@@ -1,0 +1,67 @@
+﻿<div class="confirmation-dialog-container">
+    @if (Show)
+    {
+        <div class="confirmation-dialog">
+            <h3>@Message</h3>
+            <hr />
+            <button type="button" class="btn btn-danger" @onclick="() => Confirmation(true)">Yes</button>
+            <button type="button" class="btn btn-info" @onclick="() => Confirmation(false)">No</button>
+        </div>
+
+    }
+    <button type="button" class="@Class" @onclick="() => ShowPop()">@Title</button>
+</div>
+
+@code {
+    public bool Show { get; set; }
+
+    [Parameter] 
+    public string Title { get; set; } = "Delete";
+
+    [Parameter] 
+    public string Class { get; set; } = "btn btn-danger";
+
+    [Parameter] 
+    public string Message { get; set; } = "Are you sure?";
+
+    [Parameter]
+    public EventCallback<Guid> SetSelectedValue { get; set; }
+
+    [Parameter] 
+    public EventCallback<bool> ConfirmedChanged { get; set; }
+
+    public async Task Confirmation(bool value)
+    {
+        Show = false;
+        await ConfirmedChanged.InvokeAsync(value);
+    }
+
+    public async Task Selection(Guid id)
+    {
+        await SetSelectedValue.InvokeAsync(id);
+    }
+
+    public void ShowPop()
+    {
+        Show = true;
+    }
+}
+
+ @* TODO - Move this to correct location *@
+<style>
+    .confirmation-dialog-container {
+        position: relative;
+    }
+
+    .confirmation-dialog {
+        background-color: white;
+        border-style: solid;
+        border-width: 1px;
+        border-color: lightblue;
+        width: 250px;
+        position: absolute;
+        top: -50px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+</style>

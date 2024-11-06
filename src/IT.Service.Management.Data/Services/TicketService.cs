@@ -27,6 +27,22 @@ public class TicketService : ITicketService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task DeleteTicketAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        var ticket = await GetTicketAsync(id);
+
+        if (ticket is null)
+        {
+            return;
+        }
+
+        _dbContext
+           .Tickets
+           .Remove(ticket);
+    }
+
     public IEnumerable<Ticket> GetAllTickets()
     {
         return _dbContext

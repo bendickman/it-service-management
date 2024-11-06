@@ -11,4 +11,6 @@ public interface ITicketService
     Task AddTicketAsync(
         Ticket ticket,
         CancellationToken cancellationToken);
+
+    Task DeleteTicketAsync(Guid id, CancellationToken cancellationToken = default);
 }
