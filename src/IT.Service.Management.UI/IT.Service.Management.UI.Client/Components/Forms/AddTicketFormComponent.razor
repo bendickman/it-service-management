@@ -2,6 +2,7 @@
 @using IT.Service.Management.UI.Endpoints.Ticket.Add
 @using IT.Service.Management.UI.Shared.FormModels
 @inject IClientTicketService _clientTicketService;
+@inject NavigationManager NavigationManager;
 
 <EditForm EditContext="_editContext" OnValidSubmit="() => CreateTicket()">
     <div>
@@ -38,6 +39,6 @@
 
         var result = _clientTicketService.AddTicket(request);
 
-        //add some notification here...
+        NavigationManager.NavigateTo("/");
     }
 }

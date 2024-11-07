@@ -1,4 +1,4 @@
-﻿@using IT.Service.Management.UI.Client.Components.Utility;
+﻿@using IT.Service.Management.UI.Client.Components.ConfirmationDialog;
 @using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
 @inject IClientTicketService _ticketService;
@@ -27,11 +27,7 @@
                     <td>@ticket.createdDate.ToString("dd MMM yyyy")</td>
                     <td>
                         <a class="btn btn-sm btn-info" href="/ticket/@(ticket.id)">Edit</a>
-                        <ConfirmationDialogComponent
-                            Class="btn btn-sm btn-danger"
-                            Title="Delete"
-                            ConfirmedChanged="Confirmation"
-                            SetSelectedValue="Selection"></ConfirmationDialogComponent>
+                        <a class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(ticket.id)">Delete</a>
                     </td>
                 </tr>
             }
@@ -39,14 +35,28 @@
     </table>
 }
 
+@if(ShowConfirmationDialog)
+{
+    <ConfirmationDialogComponent 
+        Class="btn btn-sm btn-danger"
+        Title="Confirm Delete"
+        Message="Are you sure you want to delete this ticket?"
+        ConfirmedChanged="Confirmation">
+    </ConfirmationDialogComponent>
+}
+
 @code {
-    private IEnumerable<Ticket> _tickets = Enumerable.Empty<Ticket>();
+    private bool ShowConfirmationDialog;
+
+    private Guid ToBeDeleted;
+
+    private List<Ticket> _tickets = Enumerable.Empty<Ticket>().ToList();
 
     public Guid SelectedTicketId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _tickets = await _ticketService.ListTicketsAsync();
+        _tickets = (await _ticketService.ListTicketsAsync()).ToList();
     }
 
     public async Task Selection(Guid id)
@@ -54,11 +64,21 @@
         SelectedTicketId = id;
     }
 
+    private void ConfirmDelete(Guid ticketId)
+    {
+        ToBeDeleted = ticketId;
+        ShowConfirmationDialog = true;
+    }
+
     public async Task Confirmation(bool result)
     {
+        ShowConfirmationDialog = false;
         if (!result)
         {
             return;
         }
+
+        _tickets.Remove(_tickets.Single(t => t.id == ToBeDeleted));
+        await _ticketService.DeleteTicketAsync(ToBeDeleted);
     }
 }

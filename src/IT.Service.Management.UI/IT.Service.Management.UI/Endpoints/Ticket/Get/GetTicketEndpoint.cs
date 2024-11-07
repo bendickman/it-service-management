@@ -15,6 +15,7 @@ public class GetTicketEndpoint : EndpointBaseAsync.WithRequest<Guid>.WithActionR
         _ticketService = ticketService;
     }
 
+    [HttpGet]
     public override async Task<ActionResult> HandleAsync(
         Guid id,
         CancellationToken cancellationToken = default)

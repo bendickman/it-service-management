@@ -41,6 +41,8 @@ public class TicketService : ITicketService
         _dbContext
            .Tickets
            .Remove(ticket);
+
+        await _dbContext.SaveChangesAsync();
     }
 
     public IEnumerable<Ticket> GetAllTickets()
