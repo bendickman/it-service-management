@@ -1,7 +1,7 @@
 ﻿@using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Endpoints.Ticket.Add
 @using IT.Service.Management.UI.Shared.FormModels
-@inject IClientTicketService _clientTicketService;
+@inject IClientTicketService ClientTicketService;
 @inject NavigationManager NavigationManager;
 
 <EditForm EditContext="_editContext" OnValidSubmit="() => CreateTicket()">
@@ -13,11 +13,9 @@
         <InputText @bind-Value="_formModel.Description" class="form-control"></InputText>
 
     </div>
-
     <div class="mt-4">
         <button type="submit" class="btn btn-success">Create</button>
     </div>
-
 </EditForm>
 
 @code {
@@ -37,7 +35,7 @@
             Description = _formModel.Description,
         };
 
-        var result = _clientTicketService.AddTicket(request);
+        await ClientTicketService.AddTicket(request);
 
         NavigationManager.NavigateTo("/");
     }

@@ -18,7 +18,7 @@
     [Parameter]
     public EventCallback<bool> ConfirmedChanged { get; set; }
 
-    public async Task Confirmation(bool value)
+    private async Task Confirmation(bool value)
     {
         await ConfirmedChanged.InvokeAsync(value);
     }

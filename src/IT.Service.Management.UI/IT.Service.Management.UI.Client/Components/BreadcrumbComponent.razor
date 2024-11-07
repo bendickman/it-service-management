@@ -1,4 +1,10 @@
 ﻿@using IT.Service.Management.UI.Shared.Models
+
+@if (Ticket is null)
+{
+    return;
+}
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Tickets</a></li>
@@ -9,5 +15,5 @@
 @code {
 
     [Parameter]
-    public Ticket Ticket { get; set; }
+    public Ticket? Ticket { get; set; }
 }

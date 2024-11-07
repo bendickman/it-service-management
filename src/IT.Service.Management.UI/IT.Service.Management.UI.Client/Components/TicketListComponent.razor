@@ -1,12 +1,12 @@
 ﻿@using IT.Service.Management.UI.Client.Components.ConfirmationDialog;
 @using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
-@inject IClientTicketService _ticketService;
+@inject IClientTicketService TicketService;
 
-<h3>Tickets</h3>
+<h3>Your Tickets</h3>
 
 <div class="mt-3 mb-2">
-    <a href="/ticket/add" class="btn btn-md btn-success">Create Ticket</a>
+    <a href="/ticket/add" class="btn btn-md btn-success">Create</a>
 </div>
 
 @if (_tickets?.Any() ?? false)
@@ -26,7 +26,7 @@
                     <th scope="row">@ticket.title</th>
                     <td>@ticket.createdDate.ToString("dd MMM yyyy")</td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="/ticket/@(ticket.id)">Edit</a>
+                        <a class="btn btn-sm btn-info" href="/ticket/@(ticket.id)">View</a>
                         <a class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(ticket.id)">Delete</a>
                     </td>
                 </tr>
@@ -35,7 +35,7 @@
     </table>
 }
 
-@if(ShowConfirmationDialog)
+@if (ShowConfirmationDialog)
 {
     <ConfirmationDialogComponent 
         Class="btn btn-sm btn-danger"
@@ -52,16 +52,9 @@
 
     private List<Ticket> _tickets = Enumerable.Empty<Ticket>().ToList();
 
-    public Guid SelectedTicketId { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-        _tickets = (await _ticketService.ListTicketsAsync()).ToList();
-    }
-
-    public async Task Selection(Guid id)
-    {
-        SelectedTicketId = id;
+        _tickets = (await TicketService.ListTicketsAsync()).ToList();
     }
 
     private void ConfirmDelete(Guid ticketId)
@@ -70,7 +63,7 @@
         ShowConfirmationDialog = true;
     }
 
-    public async Task Confirmation(bool result)
+    private async Task Confirmation(bool result)
     {
         ShowConfirmationDialog = false;
         if (!result)
@@ -79,6 +72,6 @@
         }
 
         _tickets.Remove(_tickets.Single(t => t.id == ToBeDeleted));
-        await _ticketService.DeleteTicketAsync(ToBeDeleted);
+        await TicketService.DeleteTicketAsync(ToBeDeleted);
     }
 }
