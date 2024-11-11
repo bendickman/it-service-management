@@ -6,12 +6,12 @@
 <h3>Your Tickets</h3>
 
 <div class="mt-3 mb-2">
-    <a href="/ticket/add" class="btn btn-md btn-success">Create</a>
+    <a href="/ticket/create" class="btn btn-md btn-success">Create</a>
 </div>
 
 @if (_tickets?.Any() ?? false)
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Title</th>
@@ -23,11 +23,19 @@
             @foreach (var ticket in _tickets.OrderBy(t => t.CreatedDate))
             {
                 <tr>
-                    <th scope="row">@ticket.Title</th>
-                    <td>@ticket.CreatedDate.ToString("dd MMM yyyy")</td>
+                    <td>@ticket.Title</td>
+                    @if (ticket.HasUpdatedDate)
+                    {
+                        <td>@ticket.UpdatedDate!.Value.ToString("dd MMM yyyy H:mm")</td>
+                    }
+                    else
+                    {
+                        <td>@ticket.CreatedDate.ToString("dd MMM yyyy H:mm")</td>
+                    }
                     <td>
-                        <a class="btn btn-sm btn-info" href="/ticket/@(ticket.Id)">View</a>
-                        <a class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(ticket.Id)">Delete</a>
+                        <a href="/ticket/@(ticket.Id)"><i class="bi bi-eye fs-4 mx-1"></i></a>
+                        <a href="/ticket/update/@(ticket.Id)"><i class="bi bi-pencil fs-4 text-warning mx-1"></i></a>
+                        <a style="cursor: pointer" @onclick="() => ConfirmDelete(ticket.Id)"><i class="bi bi-trash fs-4 text-danger mx-1"></i></a>
                     </td>
                 </tr>
             }

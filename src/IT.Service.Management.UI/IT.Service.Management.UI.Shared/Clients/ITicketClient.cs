@@ -1,5 +1,4 @@
-﻿using IT.Service.Management.UI.Endpoints.Ticket.Add;
-using IT.Service.Management.UI.Shared.Models;
+﻿using IT.Service.Management.UI.Shared.Models;
 using Refit;
 
 namespace IT.Service.Management.UI.Shared.Clients;
@@ -14,6 +13,9 @@ public interface ITicketClient
 
     [Post("/v1/ticket")]
     Task AddTicket(CreateTicketRequest request, CancellationToken cancellationToken);
+
+    [Put("/v1/ticket")]
+    Task UpdateTicket(UpdateTicketRequest request, CancellationToken cancellationToken);
 
     [Delete("/v1/ticket/{id}")]
     Task DeleteTicketAsync(Guid id, CancellationToken cancellationToken);

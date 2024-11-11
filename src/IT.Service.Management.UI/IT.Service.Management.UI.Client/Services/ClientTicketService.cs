@@ -1,5 +1,4 @@
-﻿using IT.Service.Management.UI.Endpoints.Ticket.Add;
-using IT.Service.Management.UI.Shared.Clients;
+﻿using IT.Service.Management.UI.Shared.Clients;
 using IT.Service.Management.UI.Shared.Models;
 
 namespace IT.Service.Management.UI.Client.Services;
@@ -19,6 +18,13 @@ public class ClientTicketService : IClientTicketService
         CancellationToken cancellationToken = default)
     {
         await _ticketClient.AddTicket(request, cancellationToken);
+    }
+
+    public async Task UpdateTicket(
+        UpdateTicketRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        await _ticketClient.UpdateTicket(request, cancellationToken);
     }
 
     public async Task DeleteTicketAsync(

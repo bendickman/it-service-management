@@ -1,4 +1,4 @@
-﻿@page "/ticket/create"
+﻿@page "/ticket/update/{id:guid}"
 @using IT.Service.Management.UI.Client.Components
 @using IT.Service.Management.UI.Client.Components.Forms
 @using IT.Service.Management.UI.Client.Services
@@ -8,25 +8,35 @@
 @inject NavigationManager NavigationManager
 
 <BreadcrumbComponent Ticket="ticket" />
-<PageTitle>Create Ticket - @ticket.Title</PageTitle>
+<PageTitle>Edit Ticket - @ticket.Title</PageTitle>
 
-<h1>Create Ticket</h1>
+<h1>Update Ticket</h1>
 <br />
 
-<TicketFormComponent ticket="@ticket" OnValidSubmit="@CreateTicket" SubmitButtonText="Create"></TicketFormComponent>
+<TicketFormComponent ticket="@ticket" OnValidSubmit="@UpdateTicket" SubmitButtonText="Update"></TicketFormComponent>
 
 @code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+
     Ticket ticket = new Ticket();
 
-    private async Task CreateTicket()
+    protected async override Task OnParametersSetAsync()
     {
-        var request = new CreateTicketRequest
+        ticket = await ClientTicketService.GetTicketAsync(Id);
+    }
+
+    private async Task UpdateTicket()
+    {
+        var request = new UpdateTicketRequest
         {
+            Id = ticket.Id,
             Title = ticket.Title,
             Description = ticket.Description,
         };
 
-        await ClientTicketService.AddTicket(request);
+        await ClientTicketService.UpdateTicket(request);
 
         NavigationManager.NavigateTo("/");
     }

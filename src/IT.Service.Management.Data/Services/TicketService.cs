@@ -27,6 +27,24 @@ public class TicketService : ITicketService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task UpdateTicketAsync(
+        Ticket ticket,
+        CancellationToken cancellationToken)
+    {
+        var currentTicket = await GetTicketAsync(ticket.Id);
+
+        if (currentTicket is null)
+        {
+            throw new KeyNotFoundException("Ticket not found");
+        }
+
+        currentTicket.Title = ticket.Title;
+        currentTicket.Description = ticket.Description;
+        currentTicket.UpdatedDate = DateTime.UtcNow;
+
+        await _dbContext.SaveChangesAsync();
+    }
+
     public async Task DeleteTicketAsync(
         Guid id,
         CancellationToken cancellationToken = default)

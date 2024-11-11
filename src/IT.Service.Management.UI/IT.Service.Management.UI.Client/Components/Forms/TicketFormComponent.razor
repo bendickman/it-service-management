@@ -1,24 +1,24 @@
 ﻿@using IT.Service.Management.UI.Client.Services;
-@using IT.Service.Management.UI.Endpoints.Ticket.Add
 @using IT.Service.Management.UI.Shared.FormModels
 @using IT.Service.Management.UI.Shared.Models
 
 <EditForm Model="@ticket" OnValidSubmit="@OnValidSubmit">
-    <div class="form-group">
-        <label>Title :</label>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
         <div>
-            <InputText @bind-Value="@ticket.Title" class="form-control col-sm-3" />
+            <InputText @bind-Value="@ticket.Title" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
-        <label>Description :</label>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
         <div>
-            <InputTextArea @bind-Value="@ticket.Description" class="form-control col-sm-3" />
+            <InputTextArea @bind-Value="@ticket.Description" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <button type="submit" class="btn btn-success">@SubmitButtonText</button>
     </div>
+
 </EditForm>
 
 @code {
