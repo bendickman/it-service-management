@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using IT.Service.Management.UI.Client.Components.Notification
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -11,6 +12,7 @@
         </div>
 
         <article class="content px-4">
+            <NotificationComponent />
             @Body
         </article>
     </main>

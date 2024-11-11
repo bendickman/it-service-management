@@ -4,7 +4,9 @@
 @using IT.Service.Management.UI.Client.Services
 @using IT.Service.Management.UI.Shared.Clients
 @using IT.Service.Management.UI.Shared.Models
+@using IT.Service.Management.UI.Shared.Services
 @inject IClientTicketService ClientTicketService
+@inject INotificationService NotificationService
 @inject NavigationManager NavigationManager
 
 <BreadcrumbComponent Ticket="ticket" />
@@ -27,6 +29,8 @@
         };
 
         await ClientTicketService.AddTicket(request);
+
+        NotificationService.Success($"Ticket '{ticket.Title}' successfully created", true, false);
 
         NavigationManager.NavigateTo("/");
     }

@@ -6,6 +6,7 @@ using IT.Service.Management.Data.Settings;
 using IT.Service.Management.UI.Client.Services;
 using IT.Service.Management.UI.Components;
 using IT.Service.Management.UI.Shared.Clients;
+using IT.Service.Management.UI.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 using Refit;
 
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IClientTicketService, ClientTicketService>();
+builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 builder.Services
     .AddRefitClient<ITicketClient>()

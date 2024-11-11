@@ -4,7 +4,9 @@
 @using IT.Service.Management.UI.Client.Services
 @using IT.Service.Management.UI.Shared.Clients
 @using IT.Service.Management.UI.Shared.Models
+@using IT.Service.Management.UI.Shared.Services
 @inject IClientTicketService ClientTicketService
+@inject INotificationService NotificationService
 @inject NavigationManager NavigationManager
 
 <BreadcrumbComponent Ticket="ticket" />
@@ -15,7 +17,7 @@
 
 <TicketFormComponent ticket="@ticket" OnValidSubmit="@UpdateTicket" SubmitButtonText="Update"></TicketFormComponent>
 
-@code {
+    @code {
 
     [Parameter]
     public Guid Id { get; set; }
@@ -37,6 +39,8 @@
         };
 
         await ClientTicketService.UpdateTicket(request);
+
+        NotificationService.Success($"Ticket '{ticket.Title}' successfully saved", true, false);
 
         NavigationManager.NavigateTo("/");
     }

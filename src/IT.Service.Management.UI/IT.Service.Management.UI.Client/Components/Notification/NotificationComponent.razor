@@ -1,0 +1,121 @@
+﻿@using IT.Service.Management.UI.Shared.Models
+@using IT.Service.Management.UI.Shared.Services
+@implements IDisposable
+@inject INotificationService NotificationService
+@inject NavigationManager NavigationManager
+
+@foreach (var alert in alerts)
+{
+    <div class="@GetCssClass(alert)">
+        <strong>@alert.Message</strong>
+        <button type="button" class="btn-close" @onclick="@(() => RemoveAlert(alert))"></button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = "default-alert";
+
+    [Parameter]
+    public bool Fade { get; set; } = true;
+
+    private List<NotificationModel> alerts = new List<NotificationModel>();
+
+    private static readonly IDictionary<NotificationType, string> _notificationsCssClass = new Dictionary<NotificationType, string>()
+    {
+        { NotificationType.Success, "alert-success"},
+        { NotificationType.Error, "alert-danger"},
+        { NotificationType.Info, "alert-info"},
+        { NotificationType.Warning, "alert-warning"},
+    };
+
+    protected override void OnInitialized()
+    {
+        NotificationService.OnAlert += OnAlert;
+        NavigationManager.LocationChanged += OnLocationChange!;
+    }
+
+    public void Dispose()
+    {
+        NotificationService.OnAlert -= OnAlert;
+        NavigationManager.LocationChanged -= OnLocationChange!;
+    }
+
+    private async void OnAlert(NotificationModel alert)
+    {
+        if (alert.Id != Id)
+        {
+            return;
+        }
+
+        if (alert.Message is null)
+        {
+            alerts.RemoveAll(x => !x.KeepAfterRouteChange);
+            alerts.ForEach(x => x.KeepAfterRouteChange = false);
+        }
+        else
+        {
+            alerts.Add(alert);
+            StateHasChanged();
+
+            if (alert.AutoClose)
+            {
+                await Task.Delay(3000);
+                RemoveAlert(alert);
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    private void OnLocationChange(
+        object sender, 
+        LocationChangedEventArgs e)
+    {
+        NotificationService.Clear(Id);
+    }
+
+    private async void RemoveAlert(NotificationModel alert)
+    {
+        if (!alerts.Contains(alert))
+        {
+            return;
+        }
+
+        if (Fade)
+        {
+            alert.Fade = true;
+
+            await Task.Delay(250);
+            alerts.Remove(alert);
+        }
+        else
+        {
+            alerts.Remove(alert);
+        }
+
+        StateHasChanged();
+    }
+
+    private string GetCssClass(NotificationModel alert)
+    {
+        if (alert is null) 
+        {
+            return string.Empty;
+        }
+
+        var classes = new List<string> { "alert", "alert-dismissible" };
+
+        if (_notificationsCssClass.TryGetValue(alert.Type, out var cssClass))
+        {
+            classes.Add(cssClass);
+        }
+
+        if (alert.Fade)
+        {
+            classes.Add("fade");
+        }
+
+        return string.Join(' ', classes);
+    }
+}

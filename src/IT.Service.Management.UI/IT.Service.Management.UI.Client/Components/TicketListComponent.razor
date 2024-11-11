@@ -1,7 +1,9 @@
 ﻿@using IT.Service.Management.UI.Client.Components.ConfirmationDialog;
 @using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.Models;
+@using IT.Service.Management.UI.Shared.Services
 @inject IClientTicketService TicketService;
+@inject INotificationService NotificationService
 
 <h3>Your Tickets</h3>
 
@@ -81,5 +83,7 @@
 
         _tickets.Remove(_tickets.Single(t => t.Id == ToBeDeleted));
         await TicketService.DeleteTicketAsync(ToBeDeleted);
+
+        NotificationService.Success($"Ticket deleted successfully", true, false);
     }
 }
