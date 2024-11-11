@@ -7,16 +7,16 @@
 @if (ticket is not null)
 {
     <BreadcrumbComponent Ticket="ticket" />
-    <PageTitle>Ticket Details - @ticket.title</PageTitle>
+    <PageTitle>Ticket Details - @ticket.Title</PageTitle>
 
     <div class="card">
         <div class="card-header alert alert-info">
             Ticket Details
         </div>
         <div class="card-body">
-            <h5 class="card-title">@ticket.title</h5>
-            <p class="card-text">@ticket.createdDate.ToString("dd MMM yyyy")</p>
-            <p class="card-text">@ticket.description</p>
+            <h5 class="card-title">@ticket.Title</h5>
+            <p class="card-text">@ticket.CreatedDate.ToString("dd MMM yyyy")</p>
+            <p class="card-text">@ticket.Description</p>
         </div>
     </div>
 }

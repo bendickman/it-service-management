@@ -1,3 +1,12 @@
 ﻿namespace IT.Service.Management.UI.Shared.Models;
 
-public record Ticket(Guid id, string title, string description, DateTime createdDate);
+public class Ticket
+{
+    public Guid Id { get; set; }
+
+    public string Title { get; set; } = string.Empty;
+
+    public string Description { get; set; } = string.Empty;
+
+    public DateTime CreatedDate { get; set; }
+}

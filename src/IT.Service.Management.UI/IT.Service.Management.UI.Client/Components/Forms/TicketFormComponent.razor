@@ -1,0 +1,33 @@
+﻿@using IT.Service.Management.UI.Client.Services;
+@using IT.Service.Management.UI.Endpoints.Ticket.Add
+@using IT.Service.Management.UI.Shared.FormModels
+@using IT.Service.Management.UI.Shared.Models
+
+<EditForm Model="@ticket" OnValidSubmit="@OnValidSubmit">
+    <div class="form-group">
+        <label>Title :</label>
+        <div>
+            <InputText @bind-Value="@ticket.Title" class="form-control col-sm-3" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Description :</label>
+        <div>
+            <InputTextArea @bind-Value="@ticket.Description" class="form-control col-sm-3" />
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">@SubmitButtonText</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Ticket? ticket { get; set; }
+
+    [Parameter]
+    public string SubmitButtonText { get; set; } = "Save";
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+}

@@ -20,14 +20,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var ticket in _tickets.OrderBy(t => t.createdDate))
+            @foreach (var ticket in _tickets.OrderBy(t => t.CreatedDate))
             {
                 <tr>
-                    <th scope="row">@ticket.title</th>
-                    <td>@ticket.createdDate.ToString("dd MMM yyyy")</td>
+                    <th scope="row">@ticket.Title</th>
+                    <td>@ticket.CreatedDate.ToString("dd MMM yyyy")</td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="/ticket/@(ticket.id)">View</a>
-                        <a class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(ticket.id)">Delete</a>
+                        <a class="btn btn-sm btn-info" href="/ticket/@(ticket.Id)">View</a>
+                        <a class="btn btn-sm btn-danger" @onclick="() => ConfirmDelete(ticket.Id)">Delete</a>
                     </td>
                 </tr>
             }
@@ -71,7 +71,7 @@
             return;
         }
 
-        _tickets.Remove(_tickets.Single(t => t.id == ToBeDeleted));
+        _tickets.Remove(_tickets.Single(t => t.Id == ToBeDeleted));
         await TicketService.DeleteTicketAsync(ToBeDeleted);
     }
 }

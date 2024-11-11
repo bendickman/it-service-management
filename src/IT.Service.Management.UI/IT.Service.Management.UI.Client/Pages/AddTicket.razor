@@ -1,4 +1,26 @@
 ﻿@page "/ticket/add"
 @using IT.Service.Management.UI.Client.Components.Forms
+@using IT.Service.Management.UI.Client.Services
+@using IT.Service.Management.UI.Endpoints.Ticket.Add
+@using IT.Service.Management.UI.Shared.Models
+@inject IClientTicketService ClientTicketService
+@inject NavigationManager NavigationManager
 
-<AddTicketFormComponent></AddTicketFormComponent>
+<TicketFormComponent ticket="@ticket" OnValidSubmit="@CreateTicket" SubmitButtonText="Create"></TicketFormComponent>
+
+@code {
+    Ticket ticket = new Ticket();
+
+    private async Task CreateTicket()
+    {
+        var request = new CreateTicketRequest
+        {
+            Title = ticket.Title,
+            Description = ticket.Description,
+        };
+
+        await ClientTicketService.AddTicket(request);
+
+        NavigationManager.NavigateTo("/");
+    }
+}
