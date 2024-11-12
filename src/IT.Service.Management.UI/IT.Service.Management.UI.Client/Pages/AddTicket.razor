@@ -9,28 +9,32 @@
 @inject INotificationService NotificationService
 @inject NavigationManager NavigationManager
 
-<BreadcrumbComponent Ticket="ticket" />
-<PageTitle>Create Ticket - @ticket.Title</PageTitle>
+<BreadcrumbComponent Ticket="@Ticket" />
+<PageTitle>Create Ticket - @Ticket.Title</PageTitle>
 
-<h1>Create Ticket</h1>
-<br />
+    <h1>Create Ticket</h1>
+    <br />
 
-<TicketFormComponent ticket="@ticket" OnValidSubmit="@CreateTicket" SubmitButtonText="Create"></TicketFormComponent>
+    <TicketFormComponent Ticket="@Ticket" IsLoading="@IsLoading" OnValidSubmit="@CreateTicket" SubmitButtonText="Create"></TicketFormComponent>
 
-@code {
-    Ticket ticket = new Ticket();
+    @code {
+    private Ticket Ticket = new Ticket();
+
+    private bool IsLoading;
 
     private async Task CreateTicket()
     {
+        IsLoading = true;
         var request = new CreateTicketRequest
-        {
-            Title = ticket.Title,
-            Description = ticket.Description,
-        };
+            {
+                Title = Ticket.Title,
+                Description = Ticket.Description,
+            };
 
         await ClientTicketService.AddTicket(request);
 
-        NotificationService.Success($"Ticket '{ticket.Title}' successfully created", true, false);
+        NotificationService.Success($"Ticket '{Ticket.Title}' successfully created", true, false);
+        IsLoading = false;
 
         NavigationManager.NavigateTo("/");
     }

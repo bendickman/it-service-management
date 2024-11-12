@@ -9,38 +9,41 @@
 @inject INotificationService NotificationService
 @inject NavigationManager NavigationManager
 
-<BreadcrumbComponent Ticket="ticket" />
-<PageTitle>Edit Ticket - @ticket.Title</PageTitle>
+<BreadcrumbComponent Ticket="@Ticket" />
+<PageTitle>Edit Ticket - @Ticket.Title</PageTitle>
 
-<h1>Update Ticket</h1>
-<br />
+    <h1>Update Ticket</h1>
+    <br />
 
-<TicketFormComponent ticket="@ticket" OnValidSubmit="@UpdateTicket" SubmitButtonText="Update"></TicketFormComponent>
+    <TicketFormComponent Ticket="@Ticket" IsLoading="@IsLoading" OnValidSubmit="@UpdateTicket" SubmitButtonText="Update"></TicketFormComponent>
 
     @code {
-
     [Parameter]
     public Guid Id { get; set; }
 
-    Ticket ticket = new Ticket();
+    private Ticket Ticket = new Ticket();
+
+    private bool IsLoading;
 
     protected async override Task OnParametersSetAsync()
     {
-        ticket = await ClientTicketService.GetTicketAsync(Id);
+        Ticket = await ClientTicketService.GetTicketAsync(Id);
     }
 
     private async Task UpdateTicket()
     {
+        IsLoading = true;
         var request = new UpdateTicketRequest
-        {
-            Id = ticket.Id,
-            Title = ticket.Title,
-            Description = ticket.Description,
-        };
+            {
+                Id = Ticket.Id,
+                Title = Ticket.Title,
+                Description = Ticket.Description,
+            };
 
         await ClientTicketService.UpdateTicket(request);
 
-        NotificationService.Success($"Ticket '{ticket.Title}' successfully saved", true, false);
+        NotificationService.Success($"Ticket '{Ticket.Title}' successfully saved", true, false);
+        IsLoading = false;
 
         NavigationManager.NavigateTo("/");
     }

@@ -2,31 +2,40 @@
 @using IT.Service.Management.UI.Shared.FormModels
 @using IT.Service.Management.UI.Shared.Models
 
-<EditForm Model="@ticket" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@Ticket" OnValidSubmit="@OnValidSubmit">
     <div class="mb-3">
         <label class="form-label">Title</label>
         <div>
-            <InputText @bind-Value="@ticket.Title" class="form-control" />
+            <InputText @bind-Value="@Ticket.Title" class="form-control" />
         </div>
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
         <div>
-            <InputTextArea @bind-Value="@ticket.Description" class="form-control" />
+            <InputTextArea @bind-Value="@Ticket.Description" class="form-control" />
         </div>
     </div>
     <div class="mb-3">
-        <button type="submit" class="btn btn-success">@SubmitButtonText</button>
+        <button disabled="@IsLoading" type="submit" class="btn btn-success">
+            @SubmitButtonText
+            @if (IsLoading)
+            {
+                <span class="spinner-border spinner-border-sm mx-1"></span>
+            }
+        </button>
     </div>
 
 </EditForm>
 
 @code {
     [Parameter]
-    public Ticket? ticket { get; set; }
+    public Ticket? Ticket { get; set; }
 
     [Parameter]
     public string SubmitButtonText { get; set; } = "Save";
+
+    [Parameter]
+    public bool IsLoading { get; set; }
 
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
