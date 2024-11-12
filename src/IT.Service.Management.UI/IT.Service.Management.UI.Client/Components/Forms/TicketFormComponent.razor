@@ -1,18 +1,23 @@
 ﻿@using IT.Service.Management.UI.Client.Services;
 @using IT.Service.Management.UI.Shared.FormModels
 @using IT.Service.Management.UI.Shared.Models
+@using IT.Service.Management.UI.Shared.Validators
 
 <EditForm Model="@Ticket" OnValidSubmit="@OnValidSubmit">
+    <FluentValidator TValidator="TicketValidator" />
+
     <div class="mb-3">
         <label class="form-label">Title</label>
         <div>
             <InputText @bind-Value="@Ticket.Title" class="form-control" />
+            <ValidationMessage For="@(() => Ticket.Title)" />
         </div>
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
         <div>
             <InputTextArea @bind-Value="@Ticket.Description" class="form-control" />
+            <ValidationMessage For="@(() => Ticket.Description)" />
         </div>
     </div>
     <div class="mb-3">
